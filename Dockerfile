@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
 
 # Set up Theia
 WORKDIR /theia
+COPY package.json package.json
 RUN yarn global add @theia/cli@1.39.0 && \
     yarn theia download:plugins \
     --plugin ms-python.python@2024.20.1 \
