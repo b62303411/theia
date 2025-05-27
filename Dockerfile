@@ -9,17 +9,16 @@ RUN apt-get update && apt-get install -y \
 
 # Set up Theia
 WORKDIR /theia
-RUN npm install -g @theia/cli@1.39.0 && \
-    yarn global add @theia/cli && \
+RUN yarn global add @theia/cli@1.39.0 && \
     yarn theia download:plugins \
-    --plugin @theia/python@latest \
-    --plugin @theia/file-search@latest \
-    --plugin @theia/git@latest \
-    && yarn cache clean
+    --plugin ms-python.python@2024.20.1 \
+    --plugin theia.file-search@1.39.0 \
+    --plugin theia.git@1.39.0 \
+    && yarn cache clean || { echo "Plugin download failed"; exit 1; }
 
 # Copy Theia configuration
 COPY package.json /theia/package.json
-RUN yarn theia build
+RUN yarn theia build || { echo "Theia build failed"; exit 1; }
 
 # Expose Theia port
 EXPOSE 3000
