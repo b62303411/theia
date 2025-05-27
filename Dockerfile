@@ -7,6 +7,11 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 # Verify Yarn is available
 RUN yarn --version > yarn_version.log 2>&1 || { echo "Yarn not found"; exit 1; }
 
