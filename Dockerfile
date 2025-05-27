@@ -1,5 +1,5 @@
 # Use official Node.js image with Yarn preinstalled
-FROM node:18-bullseye-slim
+FROM node:16-bullseye-slim
 
 # ---- System Dependencies ----
 # Combine all apt operations into a single layer
