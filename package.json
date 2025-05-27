@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "dependencies": {
+    "@theia/core": "latest",
+    "@theia/filesystem": "latest",
+    "@theia/workspace": "latest",
+    "@theia/editor": "latest",
+    "@theia/python": "latest",
+    "@theia/file-search": "latest",
+    "@theia/git": "latest"
+  },
+  "theia": {
+    "frontend": {
+      "config": {
+        "applicationName": "Theia Lite for Flask",
+        "defaultTheme": "dark-modern",
+        "preferences": {
+          "files.enableTrash": false,
+          "python.pythonPath": "/usr/bin/python3"
+        }
+      }
+    }
+  }
+}
