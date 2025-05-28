@@ -6,7 +6,8 @@
     "@theia/workspace": "1.40.0",
     "@theia/editor": "1.40.0",
     "@theia/file-search": "1.40.0",
-    "@theia/terminal": "1.40.0"
+    "@theia/terminal": "1.40.0",
+    "@theia/cli": "1.40.0"
   },
   "resolutions": {
     "uuid": "^9.0.0",
