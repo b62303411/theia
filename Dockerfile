@@ -28,8 +28,8 @@ RUN yarn config set ignore-engines true && \
 
 # Create plugins directory
 RUN mkdir -p /home/theia/plugins
-
-RUN curl -L -o /tmp/ms-python.python.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/2025.7.2025052102/vspackage
+# Download the compatible Python extension from Open VSX
+RUN wget -O /tmp/ms-python.python.vsix https://open-vsx.org/api/ms-python/python/2023.12.0/file/ms-python.python-2023.12.0.vsix
 RUN file /tmp/ms-python.python.vsix
 RUN mkdir -p /home/theia/plugins/ms-python.python 
 RUN gunzip -c /tmp/ms-python.python.vsix > /home/theia/plugins/ms-python.python/ms-python.python
