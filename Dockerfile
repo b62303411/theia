@@ -10,6 +10,8 @@ RUN apt-get update && \
         libsecret-1-dev \
         curl \
         unzip && \
+        bsdtar \
+        file \
     rm -rf /var/lib/apt/lists/*
 
 # Set working directory
