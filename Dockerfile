@@ -34,6 +34,11 @@ RUN file /tmp/ms-python.python.vsix
 RUN mkdir -p /home/theia/plugins/ms-python.python 
 RUN gunzip -c /tmp/ms-python.python.vsix > /home/theia/plugins/ms-python.python/ms-python.python
 
+RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install requests
+
 # Install Python packages
 RUN pip3 install --no-cache-dir pylint python-lsp-server
 
