@@ -25,6 +25,11 @@ RUN yarn config set ignore-engines true && \
 # Create plugins directory
 RUN mkdir -p /home/theia/plugins
 
+# Download and install the Python extension
+RUN curl -L -o /tmp/ms-python.python.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/2025.7.2025052601/vspackage && \
+    unzip /tmp/ms-python.python.vsix -d /home/theia/plugins/ms-python.python && \
+    rm /tmp/ms-python.python.vsix
+
 # Download and install VS Code extensions
 RUN curl -L -o /tmp/ms-python.python.vsix https://open-vsx.org/api/ms-python/python/2024.6.0/file/ms-python.python-2024.6.0.vsix && \
     unzip /tmp/ms-python.python.vsix -d /home/theia/plugins/ms-python.python && \
