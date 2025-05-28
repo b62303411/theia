@@ -32,7 +32,8 @@ RUN mkdir -p /home/theia/plugins
 RUN wget -O /tmp/ms-python.python.vsix https://open-vsx.org/api/ms-python/python/2023.12.0/file/ms-python.python-2023.12.0.vsix
 RUN file /tmp/ms-python.python.vsix
 RUN mkdir -p /home/theia/plugins/ms-python.python 
-RUN gunzip -c /tmp/ms-python.python.vsix > /home/theia/plugins/ms-python.python/ms-python.python
+# Unzip the VSIX file
+RUN unzip /tmp/ms-python.python.vsix -d /home/theia/plugins/ms-python.python
 
 RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
 RUN python3 -m venv /opt/venv
