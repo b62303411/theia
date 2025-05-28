@@ -20,3 +20,5 @@ jobs:
       run: docker build . --file Dockerfile --tag b62303411/theia:${{ github.sha }} --tag b62303411/theia:latest
     - name: Push the Docker image
       run: docker push b62303411/theia:${{github.sha}}
+    - name: Push the Docker image
+      run: docker push b62303411/theia:latest
