@@ -31,7 +31,8 @@ RUN mkdir -p /home/theia/plugins
 
 RUN curl -L -o /tmp/ms-python.python.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/2025.7.2025052102/vspackage
 RUN file /tmp/ms-python.python.vsix
-RUN unzip /tmp/ms-python.python.vsix -d /home/theia/plugins/ms-python.python
+RUN mkdir -p /home/theia/plugins/ms-python.python && \
+    tar -xzf /tmp/ms-python.python.vsix -C /home/theia/plugins/ms-python.python
 
 # Download and install the Python extension
 RUN curl -L -o /tmp/ms-python.python.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/2025.7.2025052601/vspackage && \
