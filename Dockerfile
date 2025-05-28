@@ -9,10 +9,11 @@ RUN apt-get update && \
         build-essential \
         libsecret-1-dev \
         curl \
-        unzip && \
+        unzip \
         bsdtar \
-        file \
+        file && \
     rm -rf /var/lib/apt/lists/*
+
 
 # Set working directory
 WORKDIR /theia
