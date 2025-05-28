@@ -1,46 +1,30 @@
-# Use official Node.js image with Yarn preinstalled
-FROM node:16-bullseye-slim
+FROM node:18-bookworm-slim
 
-# ---- System Dependencies ----
-# Combine all apt operations into a single layer
 RUN apt-get update && \
     apt-get install -y \
-    python3 \
-    python3-pip \
-    git \
-    make \
-    g++ \
+      python3 \
+      python3-pip \
+      git \
+      build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# ---- Theia Setup ----
 WORKDIR /theia
 
-# Copy package.json first for better caching
 COPY package.json .
+COPY yarn.lock .  # Generate lockfile locally for reproducibility
 
-# Install dependencies in one layer with cleanup
-RUN yarn install --frozen-lockfile && \
-    yarn global add @theia/cli@latest && \
-    $(yarn global bin)/theia download:plugins \
-      --plugin ms-python.python@latest \
-      --plugin theia.file-search@latest \
-      --plugin theia.git@latest && \
-    yarn cache clean
+RUN yarn config set ignore-engines true && \
+    yarn install --frozen-lockfile && \
+    yarn theia download:plugins \
+      --plugin ms-python.python@2024.6.0 \
+      --plugin vscode.git@1.81.0
 
-# ---- Python Support ----
-RUN pip3 install --no-cache-dir python-language-server pylint
+RUN pip3 install --no-cache-dir pylint python-lsp-server
 
-# ---- Build Theia ----
-RUN yarn theia build
-
-# ---- Security ----
-# Create non-root user
 RUN useradd -m theia-user && chown -R theia-user:theia-user /theia
 USER theia-user
 
-# ---- Networking & Storage ----
 EXPOSE 3000
 VOLUME /home/project
 
-# ---- Startup ----
 CMD ["yarn", "theia", "start", "--hostname=0.0.0.0", "--port=3000"]
