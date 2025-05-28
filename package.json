@@ -15,7 +15,8 @@
     "glob": "^10.0.0",
     "multer": "^2.0.0",
     "trash": "^7.0.0",
-    "fs-extra": "^11.0.0"
+    "fs-extra": "^11.0.0",
+    "keytar": "^8.13.0"
   },
   "theia": {
     "frontend": {
