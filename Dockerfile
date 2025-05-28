@@ -31,8 +31,8 @@ RUN mkdir -p /home/theia/plugins
 
 RUN curl -L -o /tmp/ms-python.python.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/2025.7.2025052102/vspackage
 RUN file /tmp/ms-python.python.vsix
-RUN mkdir -p /home/theia/plugins/ms-python.python && \
-    gunzip -c /tmp/ms-python.python.vsix
+RUN mkdir -p /home/theia/plugins/ms-python.python 
+RUN gunzip -c /tmp/ms-python.python.vsix > /home/theia/plugins/ms-python.python/ms-python.python
 
 # Install Python packages
 RUN pip3 install --no-cache-dir pylint python-lsp-server
