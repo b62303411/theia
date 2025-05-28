@@ -45,7 +45,8 @@ RUN pip3 install --no-cache-dir pylint python-lsp-server
 # Create and switch to a non-root user
 RUN useradd -m theia-user && chown -R theia-user:theia-user /theia
 USER theia-user
-
+# *** CRUCIAL: BUILD THEIA ***
+RUN yarn theia build
 # Expose port and define volume
 EXPOSE 3000
 VOLUME /home/project
