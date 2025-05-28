@@ -11,7 +11,7 @@ RUN apt-get update && \
 WORKDIR /theia
 
 COPY package.json .
-COPY yarn.lock .  # Generate lockfile locally for reproducibility
+#COPY yarn.lock .  # Generate lockfile locally for reproducibility
 
 RUN yarn config set ignore-engines true && \
     yarn install --frozen-lockfile && \
