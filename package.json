@@ -1,13 +1,22 @@
 {
   "private": true,
   "dependencies": {
-    "@theia/core": "latest",
-    "@theia/filesystem": "latest",
-    "@theia/workspace": "latest",
-    "@theia/editor": "latest",
-    "@theia/python": "latest",
-    "@theia/file-search": "latest",
-    "@theia/git": "latest"
+    "@theia/core": "1.40.0",
+    "@theia/filesystem": "1.40.0",
+    "@theia/workspace": "1.40.0",
+    "@theia/editor": "1.40.0",
+    "@theia/python": "1.40.0",
+    "@theia/file-search": "1.40.0",
+    "@theia/git": "1.40.0",
+    "@theia/terminal": "1.40.0"
+  },
+  "resolutions": {
+    "uuid": "^9.0.0",
+    "rimraf": "^4.0.0",
+    "glob": "^10.0.0",
+    "multer": "^2.0.0",
+    "trash": "^7.0.0",
+    "fs-extra": "^11.0.0"
   },
   "theia": {
     "frontend": {
@@ -16,7 +25,8 @@
         "defaultTheme": "dark-modern",
         "preferences": {
           "files.enableTrash": false,
-          "python.pythonPath": "/usr/bin/python3"
+          "python.pythonPath": "/usr/bin/python3",
+          "git.enabled": false
         }
       }
     }
