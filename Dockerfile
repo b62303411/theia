@@ -8,26 +8,29 @@ RUN apt-get update && \
         git \
         build-essential \
         libsecret-1-dev \
-        unzip \
-    && rm -rf /var/lib/apt/lists/*
+        curl \
+        unzip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /theia
 
 # Copy application files
 COPY package.json ./
-# COPY yarn.lock ./  # Uncomment if you have a yarn.lock file
 
 # Install dependencies
 RUN yarn config set ignore-engines true && \
     yarn install
 
-# Copy and install VS Code extensions
-COPY plugins/*.vsix /plugins/
-RUN mkdir -p /home/theia/plugins && \
-    for vsix in /plugins/*.vsix; do \
-        unzip "$vsix" -d "/home/theia/plugins/$(basename "$vsix" .vsix)"; \
-    done
+# Create plugins directory
+RUN mkdir -p /home/theia/plugins
+
+# Download and install VS Code extensions
+RUN curl -L -o /tmp/ms-python.python.vsix https://open-vsx.org/api/ms-python/python/2024.6.0/file/ms-python.python-2024.6.0.vsix && \
+    unzip /tmp/ms-python.python.vsix -d /home/theia/plugins/ms-python.python && \
+    curl -L -o /tmp/vscode.git.vsix https://open-vsx.org/api/vscode/git/1.81.0/file/vscode.git-1.81.0.vsix && \
+    unzip /tmp/vscode.git.vsix -d /home/theia/plugins/vscode.git && \
+    rm /tmp/*.vsix
 
 # Install Python packages
 RUN pip3 install --no-cache-dir pylint python-lsp-server
