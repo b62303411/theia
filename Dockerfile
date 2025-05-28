@@ -6,6 +6,15 @@ RUN apt-get update && \
     apt-get install -y python3 python3-pip python3-venv git build-essential libsecret-1-dev curl unzip libarchive-tools file openjdk-17-jdk maven p7zip-full && \
     rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y \
+    python3 python3-pip python3-venv \
+    git build-essential libsecret-1-dev \
+    curl unzip libarchive-tools file \
+    openjdk-17-jdk maven p7zip-full \
+    libx11-dev libxkbfile-dev pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+
 # Clone your Theia app repo (or official Theia)
 RUN git clone --depth=1 https://github.com/eclipse-theia/theia.git .   # Or use your custom app
 
