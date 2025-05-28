@@ -32,19 +32,7 @@ RUN mkdir -p /home/theia/plugins
 RUN curl -L -o /tmp/ms-python.python.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/2025.7.2025052102/vspackage
 RUN file /tmp/ms-python.python.vsix
 RUN mkdir -p /home/theia/plugins/ms-python.python && \
-    tar -xzf /tmp/ms-python.python.vsix -C /home/theia/plugins/ms-python.python
-
-# Download and install the Python extension
-RUN curl -L -o /tmp/ms-python.python.vsix https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/2025.7.2025052601/vspackage && \
-    unzip /tmp/ms-python.python.vsix -d /home/theia/plugins/ms-python.python && \
-    rm /tmp/ms-python.python.vsix
-
-# Download and install VS Code extensions
-RUN curl -L -o /tmp/ms-python.python.vsix https://open-vsx.org/api/ms-python/python/2024.6.0/file/ms-python.python-2024.6.0.vsix && \
-    unzip /tmp/ms-python.python.vsix -d /home/theia/plugins/ms-python.python && \
-    curl -L -o /tmp/vscode.git.vsix https://open-vsx.org/api/vscode/git/1.81.0/file/vscode.git-1.81.0.vsix && \
-    unzip /tmp/vscode.git.vsix -d /home/theia/plugins/vscode.git && \
-    rm /tmp/*.vsix
+    gunzip -c /tmp/ms-python.python.vsix | tar -x -C /home/theia/plugins/ms-python.python
 
 # Install Python packages
 RUN pip3 install --no-cache-dir pylint python-lsp-server
