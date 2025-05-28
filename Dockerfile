@@ -6,7 +6,7 @@ RUN apt-get update && \
       python3-pip \
       git \
       build-essential \
-      libsecret-1-dev \    # <--- ADD THIS LINE
+      libsecret-1-dev \   
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /theia
