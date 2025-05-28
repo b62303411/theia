@@ -17,6 +17,6 @@ jobs:
     - name: Login to Docker Hub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag b62303411/theia:${{ github.sha }}
+      run: docker build . --file Dockerfile --tag b62303411/theia:${{ github.sha }} b62303411/theia:latest
     - name: Push the Docker image
       run: docker push b62303411/theia:${{github.sha}}
