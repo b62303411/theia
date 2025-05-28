@@ -1,53 +1,28 @@
 FROM node:18-bookworm-slim
-
-# Install necessary packages
-RUN apt-get update && \
-    apt-get install -y \
-        python3 \
-        python3-pip \
-        git \
-        build-essential \
-        libsecret-1-dev \
-        curl \
-        unzip \
-        libarchive-tools \
-        file && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get install -y wget openjdk-17-jdk maven git
-RUN apt-get update && apt-get install -y p7zip-full
-# Set working directory
 WORKDIR /theia
 
-# Copy application files
-COPY package.json ./
+# Install OS deps
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip python3-venv git build-essential libsecret-1-dev curl unzip libarchive-tools file openjdk-17-jdk maven p7zip-full && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-RUN yarn config set ignore-engines true && \
-    yarn install
+# Clone your Theia app repo (or official Theia)
+RUN git clone --depth=1 https://github.com/eclipse-theia/theia.git .   # Or use your custom app
 
-# Create plugins directory
-RUN mkdir -p /home/theia/plugins
-# Download the compatible Python extension from Open VSX
-#RUN wget -O /tmp/ms-python.python.vsix https://open-vsx.org/api/ms-python/python/2023.12.0/file/ms-python.python-2023.12.0.vsix
-#RUN file /tmp/ms-python.python.vsix
-#RUN mkdir -p /home/theia/plugins/ms-python.python 
-# Unzip the VSIX file
-#RUN unzip /tmp/ms-python.python.vsix -d /home/theia/plugins/ms-python.python
+# Optionally: checkout a specific stable version/tag
+# RUN git checkout v1.47.0
 
-RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
+# Install Node deps
+RUN yarn config set ignore-engines true && yarn
+
+# Build theia
+RUN yarn theia build
+
+# Install Python tools as before
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
-RUN pip install requests
+RUN pip install requests pylint python-lsp-server
 
-# Install Python packages
-RUN pip3 install --no-cache-dir pylint python-lsp-server
-
-# Create and switch to a non-root user
-RUN useradd -m theia-user && chown -R theia-user:theia-user /theia
-USER theia-user
-# *** CRUCIAL: BUILD THEIA ***
-RUN yarn theia build
 # Expose port and define volume
 EXPOSE 3000
 VOLUME /home/project
